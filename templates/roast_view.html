@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roasts</title>
+</head>
+<body>
+    <a href="/">Home</a>
+{% for post in jokes %}
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">{{post.body}}</h3>
+                {% if post.joke_type == True %}
+                <p class="card-text">Roasts</p>
+                {% else %}
+                <p class="card-text">Boasts</p>
+                {% endif %}
+                
+                {{post.total_likes}}
+
+                <form action="{% url 'like_post' post.pk %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit", name="post_id", value="{{ post.id }}">Like</button> 
+                </form>
+                
+                <form action="{% url 'unlike_post' post.pk %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit", name="post_od", value="{{ post.id }}">Unlike</button> 
+                </form>
+                
+                <p>{{post.time}}</p>
+            </div>
+        </div>
+    {% endfor %}
+</body>
+</html>
